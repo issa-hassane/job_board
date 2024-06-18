@@ -1,43 +1,25 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Jobs;
+
+
 
 Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/jobs', function (){
-    return view('jobs', ['jobs'=>[
-        [
-            'id'=> 1,
-            'title'=>'Software dev',
-            'salary'=>"$4000"
-        ],
-        [
-            'id'=> 2,
-            'title'=>'ML dev',
-            'salary'=>"$5000"
-        ]
-    ]]);
+Route::get('/jobs', function () {
+    // dd($jobs);
+    return view('jobs', ['jobs'=> Jobs::all()]);
         
 });
 Route::get('/contact',function (){
     return view('contact');
 });
-Route::get('/jobs/{id}',function ($id){
-   $jobs = [
-        [
-            'id'=> 1,
-            'title'=>'Software dev',
-            'salary'=>"$4000"
-        ],
-        [
-            'id'=> 2,
-            'title'=>'ML dev',
-            'salary'=>"$5000"
-        ]
-    ];
-    $job = Arr::first($jobs,fn($job) => $job['id'] == $id);
-    // dd($job);
+Route::get('/jobs/{id}',function ($id) {
+   
+    // dd($jobs);
+    $job = Jobs::find($id);
     return view('job',['job' => $job]);
-});
+}); 
